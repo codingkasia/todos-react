@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import NewTodoForm from './components/NewTodoForm'
+import TodoList from './components/TodoList'
 
 import './App.css';
 
@@ -7,15 +9,18 @@ class App extends Component {
     super();
     this.state = {
       newTask: "",
-      allTasks: [{
-        taskName: "Learn react",
-        done: false
-      }]
+      allTasks: [
+        {
+          taskName: "Learn react",
+          done: false
+        }
+      ]
     };
+
     // this.formSubmitted = this.formSubmitted.bind(this);
   }
 
-  formSubmitted = (event) => {
+  formSubmitted = event => {
     event.preventDefault();
     console.log(this.state.newTask);
     this.setState({
@@ -28,28 +33,45 @@ class App extends Component {
       ],
       newTask: ""
     });
-    
   };
 
-  taskChanged = (event) => {
+  taskChanged = event => {
     this.setState({
       newTask: event.target.value
-     
     });
-    
+  };
+
+  markAsComplete(event, index) {
+    console.log(event.target.checked)
+    const allTasks = [...this.state.allTasks];
+    allTasks[index] = { ...allTasks[index] };
+    allTasks[index].done = event.target.checked;
+    // console.log("index: " + allTasks[index].done);
+    this.setState({ allTasks });
+    // this.state.allTasks.map(task => console.log("Task: " + task.done))
   }
+
+  // markAsComplete = (event, index) => {
+  //   console.log(event.target.checked);
+  //   const allTasks = [...this.state.allTasks];
+  //   allTasks[index] = { ...allTasks[index] };
+  //   allTasks[index].done = event.target.checked;
+  //   // console.log("index: " + allTasks[index].done);
+  //   this.setState({ allTasks });
+  //   // this.state.allTasks.map(task => console.log("Task: " + task.done))
+  // }
   render() {
     return <div className="App">
         <h1>Todos List</h1>
-        <p>{this.state.message}</p>
-        <form onSubmit={this.formSubmitted}>
-          <label htmlFor="newTodo">Tasks</label>
-          <input onChange={this.taskChanged} id="newTodo" value={this.state.newTask} />
-          <button type="submit">Add Todos</button>
-        </form>
-        <ul>{this.state.allTasks.map(task => {
-        return <li key={task.taskName}>{task.taskName}</li>
-        })}</ul>
+
+        <NewTodoForm 
+          newTask={this.state.newTask}
+          formSubmitted = {this.formSubmitted}
+          taskChanged={this.taskChanged} 
+        />
+        <TodoList
+          allTasks = {this.state.allTasks}
+          markAsComplete={this.markAsComplete.bind(this)} />
       </div>;
   }
 }
