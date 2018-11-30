@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NewTodoForm from './components/NewTodoForm'
 import TodoList from './components/TodoList'
+import Reservation from './components/Reservation'
 
 import './App.css';
 
@@ -60,10 +61,9 @@ class App extends Component {
   //   this.setState({ allTasks });
   //   // this.state.allTasks.map(task => console.log("Task: " + task.done))
   // }
+
   render() {
     return <div className="App">
-        <h1>Todos List</h1>
-
         <NewTodoForm 
           newTask={this.state.newTask}
           formSubmitted = {this.formSubmitted}
@@ -72,6 +72,8 @@ class App extends Component {
         <TodoList
           allTasks = {this.state.allTasks}
           markAsComplete={this.markAsComplete.bind(this)} />
+
+        <Reservation />
       </div>;
   }
 }

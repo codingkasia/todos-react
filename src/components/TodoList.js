@@ -5,12 +5,8 @@ const TodoList = (props) => {
     <ul>
       {props.allTasks.map((task, index) => {
         return <li key={task.taskName}>
-          <input onChange={(event) => props.markAsComplete(event, index)} type='checkbox' checked={task.done} />
-          <span
-            style={{
-              'text-decoration': task.done ? 'line-through' : 'inherit'
-            }}
-          >
+          <input onChange={event => props.markAsComplete(event, index)} type='checkbox' checked={task.done} />
+          <span style={{ textDecoration: task.done ? 'line-through' : 'inherit' }}>
             {task.taskName}
           </span>
         </li>
